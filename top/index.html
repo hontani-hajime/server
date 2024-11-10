@@ -4,79 +4,91 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <style>
+        /* 基本スタイル */
         .container {
             padding: 20px;
         }
-        .date-time {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
+        .todo-list, .notes {
             margin-top: 20px;
-            font-size: 20px;
-            color: #333;
         }
-        .date-time .date {
-            font-size: 18px;
-            margin-bottom: 5px;
-        }
-        .date-time .time {
-            font-size: 32px;
-            font-weight: bold;
-        }
-        .calendar-embed {
-            display: flex;
-            justify-content: center;
-            margin-top: 30px;
-        }
-        iframe {
-            border: 0;
+        .todo-list input, .notes textarea {
             width: 100%;
-            height: 600px;
-            max-width: 800px;
-            border-radius: 10px;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            padding: 8px;
+            margin: 5px 0;
+        }
+        .task-list {
+            list-style: none;
+            padding: 0;
+        }
+        .task {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 8px;
+            margin-bottom: 5px;
+            background: #f4f4f4;
+            border-radius: 5px;
+        }
+        .task.completed {
+            text-decoration: line-through;
+            color: #999;
+        }
+        .notes textarea {
+            height: 100px;
+            resize: none;
         }
     </style>
 </head>
 <body>
 
 <div class="container">
-    <!-- 日付と時刻の表示 -->
-    <div class="date-time">
-        <div class="date" id="current-date"></div>
-        <div class="time" id="current-time"></div>
+    <!-- TODOリスト -->
+    <div class="todo-list">
+        <h3>TODOリスト</h3>
+        <input type="text" id="new-task" placeholder="新しいタスクを入力">
+        <button onclick="addTask()">追加</button>
+        <ul class="task-list" id="task-list"></ul>
     </div>
 
-    <!-- Googleカレンダーの埋め込み -->
-    <div class="calendar-embed">
-        <iframe src="https://calendar.google.com/calendar/embed?src=ja.japanese%23holiday%40group.v.calendar.google.com&ctz=Asia%2FTokyo" 
-                frameborder="0" scrolling="no"></iframe>
+    <!-- メモ機能 -->
+    <div class="notes">
+        <h3>メモ</h3>
+        <textarea id="notes" placeholder="メモを入力..."></textarea>
+        <button onclick="saveNotes()">保存</button>
     </div>
 </div>
 
 <script>
-    // 現在の日時を表示する関数
-    function updateDateTime() {
-        const now = new Date();
-        
-        // 日付の表示
-        const days = ["日", "月", "火", "水", "木", "金", "土"];
-        const year = now.getFullYear();
-        const month = String(now.getMonth() + 1).padStart(2, '0');
-        const date = String(now.getDate()).padStart(2, '0');
-        const day = days[now.getDay()];
-        document.getElementById("current-date").textContent = `${year}年${month}月${date}日 (${day})`;
-
-        // 時刻の表示
-        const hours = String(now.getHours()).padStart(2, '0');
-        const minutes = String(now.getMinutes()).padStart(2, '0');
-        const seconds = String(now.getSeconds()).padStart(2, '0');
-        document.getElementById("current-time").textContent = `${hours}:${minutes}:${seconds}`;
+    // TODOリスト機能
+    function addTask() {
+        const taskInput = document.getElementById("new-task");
+        const taskText = taskInput.value.trim();
+        if (taskText) {
+            const taskList = document.getElementById("task-list");
+            const taskItem = document.createElement("li");
+            taskItem.className = "task";
+            taskItem.innerHTML = `<span>${taskText}</span> <button onclick="removeTask(this)">削除</button>`;
+            taskItem.onclick = () => taskItem.classList.toggle("completed");
+            taskList.appendChild(taskItem);
+            taskInput.value = "";
+        }
     }
 
-    // 1秒ごとにupdateDateTime関数を呼び出す
-    setInterval(updateDateTime, 1000);
-    updateDateTime(); // ページ読み込み時に一度だけ実行
+    function removeTask(button) {
+        button.parentElement.remove();
+    }
+
+    // メモ保存機能
+    function saveNotes() {
+        const notes = document.getElementById("notes").value;
+        localStorage.setItem("notes", notes);
+        alert("メモが保存されました！");
+    }
+
+    // ページ読み込み時にメモを復元
+    window.onload = function() {
+        document.getElementById("notes").value = localStorage.getItem("notes") || "";
+    }
 </script>
 
 </body>
