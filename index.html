@@ -14,41 +14,103 @@
             background-color: #f4f4f4;
             color: #333;
         }
+        /* ヘッダースタイル */
         header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
             background-color: #2c3e50;
             color: white;
-            padding: 20px 0;
-            text-align: center;
+            padding: 10px 20px;
         }
-        main {
-            padding: 20px;
+        /* ハンバーガーメニュースタイル */
+        .menu-icon {
+            font-size: 24px;
+            cursor: pointer;
+            margin-right: 20px;
         }
-        footer {
-            background-color: #2c3e50;
+        .menu {
+            display: none;
+            flex-direction: column;
+            position: absolute;
+            top: 60px;
+            left: 10px;
+            background-color: #333;
+            padding: 10px;
+            border-radius: 5px;
+        }
+        .menu a {
             color: white;
-            text-align: center;
-            padding: 10px 0;
-            position: fixed;
-            width: 100%;
-            bottom: 0;
+            text-decoration: none;
+            margin: 5px 0;
+        }
+        .menu a:hover {
+            text-decoration: underline;
+        }
+        /* サイトタイトル */
+        .site-title {
+            font-size: 24px;
+            margin: 0;
+        }
+        /* 検索ボックス */
+        .search-box {
+            display: flex;
+            align-items: center;
+        }
+        .search-box input[type="text"] {
+            padding: 5px;
+            border: none;
+            border-radius: 3px;
+            margin-right: 5px;
+        }
+        .search-box button {
+            padding: 5px 10px;
+            border: none;
+            border-radius: 3px;
+            background-color: #1abc9c;
+            color: white;
+            cursor: pointer;
         }
     </style>
 </head>
 <body>
 
 <header>
-    <h1>はじめサーバー</h1>
+    <!-- ハンバーガーメニューアイコン -->
+    <div class="menu-icon" onclick="toggleMenu()">&#9776;</div>
+
+    <!-- サイトタイトル -->
+    <h1 class="site-title">はじめサーバー</h1>
+
+    <!-- 検索ボックス -->
+    <div class="search-box">
+        <input type="text" placeholder="検索...">
+        <button>検索</button>
+    </div>
+
+    <!-- メニュー -->
+    <nav class="menu" id="menu">
+        <a href="#">トップ</a>
+        <a href="#" target="_blank">学習予定表</a>
+        <a href="#" target="_blank">学習記録表</a>
+        <a href="#" target="_blank">算盤練習記録</a>
+        <a href="#" target="_blank">ピアノ練習記録</a>
+        <a href="#" target="_blank">共有フォルダ</a>
+        <a href="#">各種リンク</a>
+    </nav>
 </header>
 
-<main>
-    <h2>ようこそ！</h2>
-    <p>「はじめサーバー」のウェブサイトへようこそ。ここでは様々なサーバー関連の情報を提供しています。</p>
-    <p>今後の更新にご期待ください！</p>
-</main>
-
-<footer>
-    <p>&copy; 2024 はじめサーバー. All rights reserved.</p>
-</footer>
+<script>
+    // メニューの表示・非表示を切り替える関数
+    function toggleMenu() {
+        const menu = document.getElementById("menu");
+        if (menu.style.display === "flex") {
+            menu.style.display = "none";
+        } else {
+            menu.style.display = "flex";
+        }
+    }
+</script>
 
 </body>
 </html>
