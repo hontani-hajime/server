@@ -14,7 +14,6 @@
             background-color: #f4f4f4;
             color: #333;
         }
-        /* ヘッダースタイル */
         header {
             display: flex;
             align-items: center;
@@ -24,14 +23,12 @@
             padding: 10px 30px;
             box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
         }
-        /* ハンバーガーメニュー */
         .menu-icon {
             font-size: 24px;
             cursor: pointer;
             margin-right: 20px;
             color: #1abc9c;
         }
-        /* タイトル部分のスタイル */
         .site-title {
             font-size: 26px;
             font-weight: bold;
@@ -43,8 +40,8 @@
         .site-title:hover {
             color: #1abc9c;
         }
-        /* 検索ボックス */
         .search-box {
+            position: relative;
             display: flex;
             align-items: center;
         }
@@ -73,64 +70,79 @@
         .search-box button:hover {
             background-color: #16a085;
         }
-        /* メニューのスタイル */
-        .menu {
-            display: none;
-            flex-direction: column;
+        .suggestions {
             position: absolute;
-            top: 60px;
-            left: 10px;
-            background-color: #333;
-            padding: 10px;
-            border-radius: 5px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            top: 36px;
+            left: 0;
+            width: 100%;
+            background-color: white;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+            z-index: 1;
         }
-        .menu a {
-            color: #ecf0f1;
-            text-decoration: none;
-            padding: 8px 0;
-            font-size: 14px;
+        .suggestions div {
+            padding: 8px;
+            cursor: pointer;
+            color: #333;
         }
-        .menu a:hover {
-            color: #1abc9c;
+        .suggestions div:hover {
+            background-color: #f0f0f0;
         }
     </style>
 </head>
 <body>
 
 <header>
-    <!-- ハンバーガーメニューアイコン -->
     <div class="menu-icon" onclick="toggleMenu()">&#9776;</div>
-
-    <!-- サイトタイトル -->
     <h1 class="site-title">はじめサーバー</h1>
-
-    <!-- 検索ボックス -->
     <div class="search-box">
-        <input type="text" placeholder="検索...">
-        <button>検索</button>
+        <input type="text" id="search-input" placeholder="検索..." oninput="showSuggestions()" autocomplete="off">
+        <button onclick="search()">検索</button>
+        <div class="suggestions" id="suggestions" style="display: none;"></div>
     </div>
-
-    <!-- メニュー -->
-    <nav class="menu" id="menu">
-        <a href="#">トップ</a>
-        <a href="https://docs.google.com/file/d/1kUAzeWdr5EyYO9XeWt4mkaNzkR1dKBsq/edit?usp=docslist_api&filetype=msexcel" target="_blank">学習予定表</a>
-        <a href="https://docs.google.com/file/d/1YbcBMyEsiPHnjy14iTkpYbwwOf-jsxqV/edit?usp=docslist_api&filetype=msexcel" target="_blank">学習記録表</a>
-        <a href="https://docs.google.com/file/d/1W-enopWkMu94GLjWmluQNGDGz-fNwq4B/edit?usp=docslist_api&filetype=msexcel" target="_blank">ピアノ練習記録</a>
-        <a href="https://docs.google.com/file/d/1Q1dc8CfLdkvEP8sjkHQix1XlJQzH0cLA/edit?usp=docslist_api&filetype=msexcel" target="_blank">算盤練習記録</a>
-        <a href="https://drive.google.com/drive/folders/1C3qTH3Yk_AlGDkC4XVZEX5b1j0roQ1hOeQwj_q3F-slGjwL-LtzzIG6N496IJOgg-bwUkJ47" target="_blank">共有フォルダ</a>
-        <a href="#">各種リンク</a>
-    </nav>
 </header>
 
 <script>
-    // メニューの表示・非表示を切り替える関数
-    function toggleMenu() {
-        const menu = document.getElementById("menu");
-        if (menu.style.display === "flex") {
-            menu.style.display = "none";
+    const links = {
+        "学習予定表": "https://docs.google.com/file/d/1kUAzeWdr5EyYO9XeWt4mkaNzkR1dKBsq/edit?usp=docslist_api&filetype=msexcel",
+        "学習記録表": "https://docs.google.com/file/d/1YbcBMyEsiPHnjy14iTkpYbwwOf-jsxqV/edit?usp=docslist_api&filetype=msexcel",
+        "ピアノ練習記録": "https://docs.google.com/file/d/1W-enopWkMu94GLjWmluQNGDGz-fNwq4B/edit?usp=docslist_api&filetype=msexcel",
+        "算盤練習記録": "https://docs.google.com/file/d/1Q1dc8CfLdkvEP8sjkHQix1XlJQzH0cLA/edit?usp=docslist_api&filetype=msexcel",
+        "共有フォルダ": "https://drive.google.com/drive/folders/1C3qTH3Yk_AlGDkC4XVZEX5b1j0roQ1hOeQwj_q3F-slGjwL-LtzzIG6N496IJOgg-bwUkJ47"
+    };
+
+    function showSuggestions() {
+        const input = document.getElementById("search-input").value;
+        const suggestions = document.getElementById("suggestions");
+        suggestions.innerHTML = "";  // 初期化
+
+        if (input) {
+            for (const key in links) {
+                if (key.includes(input)) {
+                    const suggestion = document.createElement("div");
+                    suggestion.innerText = key;
+                    suggestion.onclick = () => selectSuggestion(key);
+                    suggestions.appendChild(suggestion);
+                }
+            }
+            suggestions.style.display = suggestions.children.length ? "block" : "none";
         } else {
-            menu.style.display = "flex";
+            suggestions.style.display = "none";
+        }
+    }
+
+    function selectSuggestion(text) {
+        document.getElementById("search-input").value = text;
+        document.getElementById("suggestions").style.display = "none";
+    }
+
+    function search() {
+        const query = document.getElementById("search-input").value;
+        if (links[query]) {
+            window.open(links[query], "_blank");
+        } else {
+            alert("リンクが見つかりません");
         }
     }
 </script>
