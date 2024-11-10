@@ -3,93 +3,99 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>トップページ</title>
     <style>
-        /* 基本スタイル */
-        .container {
-            padding: 20px;
-        }
-        .todo-list, .notes {
-            margin-top: 20px;
-        }
-        .todo-list input, .notes textarea {
-            width: 100%;
-            padding: 8px;
-            margin: 5px 0;
-        }
-        .task-list {
-            list-style: none;
+        /* スタイル設定 */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
             padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
         }
-        .task {
+        header {
+            width: 100%;
+            background-color: #333;
+            color: white;
+            padding: 10px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 8px;
-            margin-bottom: 5px;
-            background: #f4f4f4;
-            border-radius: 5px;
         }
-        .task.completed {
-            text-decoration: line-through;
-            color: #999;
+        .main-content {
+            display: flex;
+            justify-content: space-around;
+            width: 100%;
+            padding: 20px;
+            box-sizing: border-box;
         }
-        .notes textarea {
-            height: 100px;
-            resize: none;
+        .top-section {
+            display: flex;
+            justify-content: space-between;
+            width: 100%;
+        }
+        .datetime, .memo {
+            padding: 10px;
+            background-color: #f4f4f4;
+            border: 1px solid #ddd;
+            width: 45%;
+            margin: 10px;
+            text-align: center;
+        }
+        .datetime h2, .memo h2 {
+            margin-bottom: 10px;
+        }
+        iframe {
+            border: none;
+        }
+        .calendar, .todo-list {
+            padding: 20px;
+            background-color: #f9f9f9;
+            border: 1px solid #ddd;
+            margin: 10px;
         }
     </style>
+    <script>
+        // 現在の日時をリアルタイムで表示
+        function updateDateTime() {
+            const dateTimeElement = document.getElementById("datetime");
+            const now = new Date();
+            const options = { year: 'numeric', month: 'long', day: 'numeric', weekday: 'long', hour: '2-digit', minute: '2-digit', second: '2-digit' };
+            dateTimeElement.textContent = now.toLocaleDateString('ja-JP', options);
+        }
+        setInterval(updateDateTime, 1000);
+    </script>
 </head>
 <body>
 
-<div class="container">
-    <!-- TODOリスト -->
+<header>
+    <h1>トップページ</h1>
+</header>
+
+<div class="main-content">
+
+    <div class="top-section">
+        <div class="datetime" id="datetime-container">
+            <h2>現在の日時</h2>
+            <p id="datetime"></p>
+        </div>
+
+        <div class="memo">
+            <h2>メモ機能</h2>
+            <p>2024/11/11 サーバーを完成させる</p>
+        </div>
+    </div>
+
+    <div class="calendar">
+        <iframe src="https://calendar.google.com/calendar/embed?height=600&wkst=2&ctz=Asia%2FTokyo&showTitle=0&showTz=0&src=Y2xhc3Nyb29tMTAzNDI2NTY1NTM0MjYzMzgyODIwQGdyb3VwLmNhbGVuZGFyLmdvb2dsZS5jb20&src=ODY5NzMyNDg1OGNjMTcxZGZjODA3MTczMDY4NTFmY2EzYTZkODAyN2Q2MjJkOWQwZGQ2OGNkZjA3YzEwYmRmMkBncm91cC5jYWxlbmRhci5nb29nbGUuY29t&src=Y2RhYmE3MjhkODI3ZDA4MzFiMTY4MTJkYjhjZTU2YjdmYWYxZWRiMGZiZDU0ODZmNzQyNWQ3NWYxY2RkYWEwZEBncm91cC5jYWxlbmRhci5nb29nbGUuY29t&src=NmVhNTcxMTllYWJjOGM0ZTBiYTUzNzZhMGE0MDYxZTlmYjM2ZmI0MWVmYjRlNGYzMzZhN2RkMzBlNDU5ZmU2MkBncm91cC5jYWxlbmRhci5nb29nbGUuY29t&src=N2E1YTFlNDc4ZjkxMjA5OGU5YzBkMWZhNTc4NDAyMTA2NDU2MjRjODVjMTc3OTgzMmUwOTVkYzUzNzgwMDIwM0Bncm91cC5jYWxlbmRhci5nb29nbGUuY29t&src=MjE4YThmYjYwZjY1YzZiZmJjN2M2ZTk5MDViMTI2ZDg0YjNlZWIwZTg2YjI1YmZmYWRjYjhlZWM1Y2Y0Yzg1ZUBncm91cC5jYWxlbmRhci5nb29nbGUuY29t&src=ZTE2MzRmNTU1NjUwMGYwNTI2N2Y0OGUyOWEzNjk3ZjdiMjAyMTUwZjRiZDdjMGUzYjM3OTgzZjJjNzRiZjc1ZUBncm91cC5jYWxlbmRhci5nb29nbGUuY29t" width="800" height="600"></iframe>
+    </div>
+
     <div class="todo-list">
-        <h3>TODOリスト</h3>
-        <input type="text" id="new-task" placeholder="新しいタスクを入力">
-        <button onclick="addTask()">追加</button>
-        <ul class="task-list" id="task-list"></ul>
+        <iframe src="https://calendar.google.com/calendar/embed?height=600&wkst=2&ctz=Asia%2FTokyo&showTitle=0&showTz=0&src=ODY5NzMyNDg1OGNjMTcxZGZjODA3MTczMDY4NTFmY2EzYTZkODAyN2Q2MjJkOWQwZGQ2OGNkZjA3YzEwYmRmMkBncm91cC5jYWxlbmRhci5nb29nbGUuY29t&src=Y2RhYmE3MjhkODI3ZDA4MzFiMTY4MTJkYjhjZTU2YjdmYWYxZWRiMGZiZDU0ODZmNzQyNWQ3NWYxY2RkYWEwZEBncm91cC5jYWxlbmRhci5nb29nbGUuY29t&src=NmVhNTcxMTllYWJjOGM0ZTBiYTUzNzZhMGE0MDYxZTlmYjM2ZmI0MWVmYjRlNGYzMzZhN2RkMzBlNDU5ZmU2MkBncm91cC5jYWxlbmRhci5nb29nbGUuY29t&src=N2E1YTFlNDc4ZjkxMjA5OGU5YzBkMWZhNTc4NDAyMTA2NDU2MjRjODVjMTc3OTgzMmUwOTVkYzUzNzgwMDIwM0Bncm91cC5jYWxlbmRhci5nb29nbGUuY29t" width="500" height="600"></iframe>
     </div>
 
-    <!-- メモ機能 -->
-    <div class="notes">
-        <h3>メモ</h3>
-        <textarea id="notes" placeholder="メモを入力..."></textarea>
-        <button onclick="saveNotes()">保存</button>
-    </div>
 </div>
-
-<script>
-    // TODOリスト機能
-    function addTask() {
-        const taskInput = document.getElementById("new-task");
-        const taskText = taskInput.value.trim();
-        if (taskText) {
-            const taskList = document.getElementById("task-list");
-            const taskItem = document.createElement("li");
-            taskItem.className = "task";
-            taskItem.innerHTML = `<span>${taskText}</span> <button onclick="removeTask(this)">削除</button>`;
-            taskItem.onclick = () => taskItem.classList.toggle("completed");
-            taskList.appendChild(taskItem);
-            taskInput.value = "";
-        }
-    }
-
-    function removeTask(button) {
-        button.parentElement.remove();
-    }
-
-    // メモ保存機能
-    function saveNotes() {
-        const notes = document.getElementById("notes").value;
-        localStorage.setItem("notes", notes);
-        alert("メモが保存されました！");
-    }
-
-    // ページ読み込み時にメモを復元
-    window.onload = function() {
-        document.getElementById("notes").value = localStorage.getItem("notes") || "";
-    }
-</script>
 
 </body>
 </html>
