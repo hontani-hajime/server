@@ -1,191 +1,88 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>はじめサーバー</title>
-    <link rel="icon" href="https://hontani-hajime.github.io/server/logo.png" type="image/png">
-    <style>
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #f4f4f4;
-            color: #333;
-        }
-        header {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            background-color: #1f2d3a;
-            color: white;
-            padding: 10px 30px;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-        }
-        .menu-icon {
-            font-size: 24px;
-            cursor: pointer;
-            margin-right: 20px;
-            color: #1abc9c;
-        }
-        .site-title {
-            font-size: 26px;
-            font-weight: bold;
-            letter-spacing: 1.5px;
-            color: #ecf0f1;
-            margin: 0;
-            transition: color 0.3s;
-        }
-        .site-title:hover {
-            color: #1abc9c;
-        }
-        .search-box {
-            position: relative;
-            display: flex;
-            align-items: center;
-        }
-        .search-box input[type="text"] {
-            padding: 6px;
-            border: none;
-            border-radius: 3px;
-            margin-right: 5px;
-            background-color: #ecf0f1;
-            color: #333;
-            width: 150px;
-            transition: width 0.3s;
-        }
-        .search-box input[type="text"]:focus {
-            width: 200px;
-        }
-        .search-box button {
-            padding: 6px 12px;
-            border: none;
-            border-radius: 3px;
-            background-color: #1abc9c;
-            color: white;
-            cursor: pointer;
-            transition: background-color 0.3s;
-        }
-        .search-box button:hover {
-            background-color: #16a085;
-        }
-        .suggestions {
-            position: absolute;
-            top: 36px;
-            left: 0;
-            width: 100%;
-            background-color: white;
-            border: 1px solid #ccc;
-            border-radius: 3px;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-            z-index: 1;
-        }
-        .suggestions div {
-            padding: 8px;
-            cursor: pointer;
-            color: #333;
-        }
-        .suggestions div:hover {
-            background-color: #f0f0f0;
-        }
-        /* メニューのスタイル */
-        .menu {
-            display: none;
-            flex-direction: column;
-            position: absolute;
-            top: 60px;
-            left: 10px;
-            background-color: #333;
-            padding: 10px;
-            border-radius: 5px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-        }
-        .menu a {
-            color: #ecf0f1;
-            text-decoration: none;
-            padding: 8px 0;
-            font-size: 14px;
-        }
-        .menu a:hover {
-            color: #1abc9c;
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="apple-mobile-web-app-title" content="共通サーバー">
+  <link rel="apple-touch-icon" href="https://hontani-hajime.github.io/server/server-logo.JPG">
+  <link rel="icon" href="https://hontani-hajime.github.io/server/server-logo.JPG" type="image/jpeg">
+  <title>共通サーバー</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background-color: #f9f9f9;
+    }
+    header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px 20px;
+      background-color: #ffffff;
+      border-bottom: 1px solid #ddd;
+      position: fixed;
+      top: 0;
+      width: 100%;
+      z-index: 1000;
+    }
+    header .logo {
+      display: flex;
+      align-items: center;
+    }
+    header .logo img {
+      height: 40px;
+      margin-right: 10px;
+    }
+    header .logo .title {
+      font-size: 18px;
+      font-weight: bold;
+      color: #333;
+    }
+    header .search {
+      display: flex;
+      align-items: center;
+    }
+    header .search input[type="text"] {
+      padding: 5px;
+      font-size: 14px;
+      border: 1px solid #ddd;
+      border-radius: 3px;
+      margin-right: 5px;
+    }
+    header .search button {
+      padding: 5px 10px;
+      font-size: 14px;
+      color: #fff;
+      background-color: #007BFF;
+      border: none;
+      border-radius: 3px;
+      cursor: pointer;
+    }
+    header .search button:hover {
+      background-color: #0056b3;
+    }
+    main {
+      margin-top: 70px; /* ヘッダーの高さ分余白を追加 */
+      padding: 20px;
+    }
+  </style>
 </head>
 <body>
-
-<header>
-    <div class="menu-icon" onclick="toggleMenu()">&#9776;</div>
-    <h1 class="site-title">はじめサーバー</h1>
-    <div class="search-box">
-        <input type="text" id="search-input" placeholder="検索..." oninput="showSuggestions()" autocomplete="off">
-        <button onclick="search()">検索</button>
-        <div class="suggestions" id="suggestions" style="display: none;"></div>
+  <header>
+    <div class="logo">
+      <img src="https://hontani-hajime.github.io/server/server-logo.JPG" alt="ロゴ">
+      <div class="title">本谷元｜共通サーバー</div>
     </div>
-    <nav class="menu" id="menu">
-        <a href="#">トップ</a>
-        <a href="https://docs.google.com/file/d/1kUAzeWdr5EyYO9XeWt4mkaNzkR1dKBsq/edit?usp=docslist_api&filetype=msexcel" target="_blank">学習予定表</a>
-        <a href="https://docs.google.com/file/d/1YbcBMyEsiPHnjy14iTkpYbwwOf-jsxqV/edit?usp=docslist_api&filetype=msexcel" target="_blank">学習記録表</a>
-        <a href="https://docs.google.com/file/d/1W-enopWkMu94GLjWmluQNGDGz-fNwq4B/edit?usp=docslist_api&filetype=msexcel" target="_blank">ピアノ練習記録</a>
-        <a href="https://docs.google.com/file/d/1Q1dc8CfLdkvEP8sjkHQix1XlJQzH0cLA/edit?usp=docslist_api&filetype=msexcel" target="_blank">算盤練習記録</a>
-        <a href="https://drive.google.com/drive/folders/1C3qTH3Yk_AlGDkC4XVZEX5b1j0roQ1hOeQwj_q3F-slGjwL-LtzzIG6N496IJOgg-bwUkJ47" target="_blank">共有フォルダ</a>
-        <a href="#">各種リンク</a>
-    </nav>
-</header>
-
-<script>
-    // メニューの表示・非表示を切り替える関数
-    function toggleMenu() {
-        const menu = document.getElementById("menu");
-        if (menu.style.display === "flex") {
-            menu.style.display = "none";
-        } else {
-            menu.style.display = "flex";
-        }
-    }
-
-    const links = {
-        "学習予定表": "https://docs.google.com/file/d/1kUAzeWdr5EyYO9XeWt4mkaNzkR1dKBsq/edit?usp=docslist_api&filetype=msexcel",
-        "学習記録表": "https://docs.google.com/file/d/1YbcBMyEsiPHnjy14iTkpYbwwOf-jsxqV/edit?usp=docslist_api&filetype=msexcel",
-        "ピアノ練習記録": "https://docs.google.com/file/d/1W-enopWkMu94GLjWmluQNGDGz-fNwq4B/edit?usp=docslist_api&filetype=msexcel",
-        "算盤練習記録": "https://docs.google.com/file/d/1Q1dc8CfLdkvEP8sjkHQix1XlJQzH0cLA/edit?usp=docslist_api&filetype=msexcel",
-        "共有フォルダ": "https://drive.google.com/drive/folders/1C3qTH3Yk_AlGDkC4XVZEX5b1j0roQ1hOeQwj_q3F-slGjwL-LtzzIG6N496IJOgg-bwUkJ47"
-    };
-
-    function showSuggestions() {
-        const input = document.getElementById("search-input").value;
-        const suggestions = document.getElementById("suggestions");
-        suggestions.innerHTML = "";  // 初期化
-
-        if (input) {
-            for (const key in links) {
-                if (key.includes(input)) {
-                    const suggestion = document.createElement("div");
-                    suggestion.innerText = key;
-                    suggestion.onclick = () => selectSuggestion(key);
-                    suggestions.appendChild(suggestion);
-                }
-            }
-            suggestions.style.display = suggestions.children.length ? "block" : "none";
-        } else {
-            suggestions.style.display = "none";
-        }
-    }
-
-    function selectSuggestion(text) {
-        document.getElementById("search-input").value = text;
-        document.getElementById("suggestions").style.display = "none";
-    }
-
-    function search() {
-        const query = document.getElementById("search-input").value;
-        if (links[query]) {
-            window.open(links[query], "_blank");
-        } else {
-            alert("リンクが見つかりません");
-        }
-    }
-</script>
-
+    <div class="search">
+      <input type="text" placeholder="検索...">
+      <button>検索</button>
+    </div>
+  </header>
+  <main>
+    <h1>ようこそ、共通サーバーへ</h1>
+    <p>ここにメインコンテンツを追加してください。</p>
+  </main>
 </body>
 </html>
