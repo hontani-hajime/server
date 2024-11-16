@@ -26,6 +26,7 @@
       top: 0;
       width: 100%;
       z-index: 1000;
+      box-sizing: border-box;
     }
     header .logo {
       display: flex;
@@ -43,6 +44,7 @@
     header .search {
       display: flex;
       align-items: center;
+      margin-right: 10px; /* 左側に余白を追加 */
     }
     header .search input[type="text"] {
       padding: 5px;
@@ -50,18 +52,19 @@
       border: 1px solid #ddd;
       border-radius: 3px;
       margin-right: 5px;
+      width: 180px; /* 検索欄の幅を指定 */
     }
     header .search button {
       padding: 5px 10px;
       font-size: 14px;
-      color: #fff;
-      background-color: #007BFF;
-      border: none;
+      color: #333;
+      background-color: #e0e0e0; /* 薄いグレー */
+      border: 1px solid #ddd;
       border-radius: 3px;
       cursor: pointer;
     }
     header .search button:hover {
-      background-color: #0056b3;
+      background-color: #d6d6d6; /* ホバー時の色 */
     }
     main {
       margin-top: 70px; /* ヘッダーの高さ分余白を追加 */
