@@ -79,9 +79,10 @@
       align-items: center;
     }
     .sidebar img {
-      width: 100%; /* コンテンツ領域の幅に合わせる */
+      width: 100%;
       height: auto;
       margin-bottom: 10px;
+      cursor: pointer;
     }
     .content {
       flex: 6;
@@ -103,22 +104,32 @@
   </header>
   <main>
     <div class="sidebar">
-      <img src="https://hontani-hajime.github.io/server/%E3%83%88%E3%83%83%E3%83%95%E3%82%9A.JPG" alt="トップ">
-      <img src="https://hontani-hajime.github.io/server/ファイル.JPG" alt="ファイル">
-      <img src="https://hontani-hajime.github.io/server/日記.JPG" alt="日記">
-      <img src="https://hontani-hajime.github.io/server/%E3%82%AB%E3%83%AC%E3%83%B3%E3%82%BF%E3%82%99%E3%83%BC.JPG" alt="カレンダー">
-      <img src="https://hontani-hajime.github.io/server/%E3%83%86%E3%82%99%E3%83%BC%E3%82%BF%E3%83%98%E3%82%99%E3%83%BC%E3%82%B9.JPG" alt="データベース">
-      <img src="https://hontani-hajime.github.io/server/自分追跡.JPG" alt="自分追跡">
-      <img src="https://hontani-hajime.github.io/server/学習記録表.JPG" alt="学習記録表">
-      <img src="https://hontani-hajime.github.io/server/音楽.JPG" alt="音楽">
-      <img src="https://hontani-hajime.github.io/server/%E3%83%8F%E3%82%9A%E3%82%B9%E3%83%AF%E3%83%BC%E3%83%88%E3%82%99.JPG" alt="パスワード">
-      <img src="https://hontani-hajime.github.io/server/読書通帳.JPG" alt="読書通帳">
-      <img src="https://hontani-hajime.github.io/server/予算管理.JPG" alt="予算管理">
-      <img src="https://hontani-hajime.github.io/server/%E3%83%AA%E3%83%8F%E3%82%99%E3%83%BC%E3%82%B9%E3%83%95%E3%82%9A%E3%83%A9%E3%83%B3.JPG" alt="リバースプラン">
+      <img src="https://hontani-hajime.github.io/server/%E3%83%88%E3%83%83%E3%83%95%E3%82%9A.JPG" alt="トップ" class="clickable">
+      <img src="https://hontani-hajime.github.io/server/ファイル.JPG" alt="ファイル" class="clickable">
+      <img src="https://hontani-hajime.github.io/server/日記.JPG" alt="日記" class="clickable">
+      <img src="https://hontani-hajime.github.io/server/%E3%82%AB%E3%83%AC%E3%83%B3%E3%82%BF%E3%82%99%E3%83%BC.JPG" alt="カレンダー" class="clickable">
+      <img src="https://hontani-hajime.github.io/server/%E3%83%86%E3%82%99%E3%83%BC%E3%82%BF%E3%83%98%E3%82%99%E3%83%BC%E3%82%B9.JPG" alt="データベース" class="clickable">
+      <img src="https://hontani-hajime.github.io/server/自分追跡.JPG" alt="自分追跡" class="clickable">
+      <img src="https://hontani-hajime.github.io/server/学習記録表.JPG" alt="学習記録表" class="clickable">
+      <img src="https://hontani-hajime.github.io/server/音楽.JPG" alt="音楽" class="clickable">
+      <img src="https://hontani-hajime.github.io/server/%E3%83%8F%E3%82%9A%E3%82%B9%E3%83%AF%E3%83%BC%E3%83%88%E3%82%99.JPG" alt="パスワード" class="clickable">
+      <img src="https://hontani-hajime.github.io/server/読書通帳.JPG" alt="読書通帳" class="clickable">
+      <img src="https://hontani-hajime.github.io/server/予算管理.JPG" alt="予算管理" class="clickable">
+      <img src="https://hontani-hajime.github.io/server/%E3%83%AA%E3%83%8F%E3%82%99%E3%83%BC%E3%82%B9%E3%83%95%E3%82%9A%E3%83%A9%E3%83%B3.JPG" alt="リバースプラン" class="clickable">
     </div>
     <div class="content">
       <!-- 右側のコンテンツをここに追加 -->
     </div>
   </main>
+  <audio id="click-sound" src="https://hontani-hajime.github.io/server/mouse.mp3"></audio>
+  <script>
+    document.querySelectorAll('.sidebar img').forEach(img => {
+      img.addEventListener('click', () => {
+        const audio = document.getElementById('click-sound');
+        audio.currentTime = 0; // 再生位置をリセット
+        audio.play();
+      });
+    });
+  </script>
 </body>
 </html>
