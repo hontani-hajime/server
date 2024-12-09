@@ -19,7 +19,7 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 10px 0; /* 左右の余白を削除 */
+      padding: 10px 0;
       background-color: #ffffff;
       border-bottom: 1px solid #ddd;
       position: fixed;
@@ -27,16 +27,16 @@
       width: 100%;
       z-index: 1000;
       box-sizing: border-box;
-      height: 70px; /* ヘッダーの高さを指定 */
+      height: 70px;
     }
     header .logo {
       display: flex;
       align-items: center;
-      margin-left: 0; /* 左端に寄せる */
+      margin-left: 0;
     }
     header .logo img {
-      height: 70px; /* ヘッダーの高さと揃える */
-      width: auto; /* 画像の形を保つ */
+      height: 70px;
+      width: auto;
     }
     header .search {
       display: flex;
@@ -66,17 +66,25 @@
     main {
       margin-top: 70px;
       display: flex;
-      height: calc(100vh - 70px); /* ヘッダーを除いた高さ */
+      height: calc(100vh - 70px);
     }
     .sidebar {
-      flex: 1; /* 左側を1とする */
-      border-right: 1px solid #ddd; /* 境界線 */
+      flex: 1;
+      border-right: 1px solid #ddd;
       background-color: #f5f5f5;
-      padding: 20px;
+      padding: 10px;
       box-sizing: border-box;
+      display: flex;
+      flex-direction: column;
+      align-items: center; /* 画像を中央揃え */
+    }
+    .sidebar img {
+      width: 80%; /* 左側の幅に収まるよう調整 */
+      height: auto;
+      margin-bottom: 10px; /* 画像間の余白 */
     }
     .content {
-      flex: 6; /* 右側を6とする */
+      flex: 6;
       padding: 20px;
       box-sizing: border-box;
       background-color: #ffffff;
@@ -95,7 +103,18 @@
   </header>
   <main>
     <div class="sidebar">
-      <!-- 左側のコンテンツをここに追加 -->
+      <img src="https://hontani-hajime.github.io/server/トップ.JPG" alt="トップ">
+      <img src="https://hontani-hajime.github.io/server/ファイル.JPG" alt="ファイル">
+      <img src="https://hontani-hajime.github.io/server/日記.JPG" alt="日記">
+      <img src="https://hontani-hajime.github.io/server/カレンダー.JPG" alt="カレンダー">
+      <img src="https://hontani-hajime.github.io/server/データベース.JPG" alt="データベース">
+      <img src="https://hontani-hajime.github.io/server/自分追跡.JPG" alt="自分追跡">
+      <img src="https://hontani-hajime.github.io/server/学習記録表.JPG" alt="学習記録表">
+      <img src="https://hontani-hajime.github.io/server/音楽.JPG" alt="音楽">
+      <img src="https://hontani-hajime.github.io/server/パスワード.JPG" alt="パスワード">
+      <img src="https://hontani-hajime.github.io/server/読書通帳.JPG" alt="読書通帳">
+      <img src="https://hontani-hajime.github.io/server/予算管理.JPG" alt="予算管理">
+      <img src="https://hontani-hajime.github.io/server/リバースプラン.JPG" alt="リバースプラン">
     </div>
     <div class="content">
       <!-- 右側のコンテンツをここに追加 -->
