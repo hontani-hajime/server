@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>オセロゲーム</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #2d2d2d;
+            color: white;
+        }
+
+        .board {
+            display: grid;
+            grid-template-columns: repeat(8, 50px);
+            grid-template-rows: repeat(8, 50px);
+            gap: 5px;
+            margin: 20px auto;
+        }
+
+        .cell {
+            width: 50px;
+            height: 50px;
+            border: 1px solid #444;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #2d2d2d;
+            cursor: pointer;
+        }
+
+        .black {
+            background-color: black;
+            border-radius: 50%;
+        }
+
+        .white {
+            background-color: white;
+            border-radius: 50%;
+        }
+
+        #message {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>オセロゲーム</h1>
+    <div class="board" id="board"></div>
+    <div id="message"></div>
+
+    <script>
+        // ゲームの初期状態
+        const boardSize = 8;
+        let board = Array(boardSize).fill().map(() => Array(boardSize).fill(null));
+        let currentPlayer = 'black'; // 'black' or 'white'
+
+        const directions = [
+            [-1, 0], [1, 0], [0, -1], [0, 1], // 上, 下, 左, 右
+            [-1, -1], [1, 1], [-1, 1], [1, -1] // 斜め
+        ];
+
+        // ボード表示
+        const boardElement = document.getElementById("board");
+        const messageElement = document.getElementById("message");
+
+        function renderBoard() {
+            boardElement.innerHTML = '';
+            for (let i = 0; i < boardSize; i++) {
+                for (let j = 0; j < boardSize; j++) {
+                    const cell = document.createElement('div');
+                    cell.classList.add('cell');
+                    if (board[i][j] === 'black') {
+                        cell.classList.add('black');
+                    } else if (board[i][j] === 'white') {
+                        cell.classList.add('white');
+                    }
+                    cell.addEventListener('click', () => makeMove(i, j));
+                    boardElement.appendChild(cell);
+                }
+            }
+        }
+
+        // 手を打つ
+        function makeMove(x, y) {
+            if (board[x][y] || !isValidMove(x, y, currentPlayer)) return;
+            board[x][y] = currentPlayer;
+            flipDiscs(x, y, currentPlayer);
+            currentPlayer = currentPlayer === 'black' ? 'white' : 'black';
+            renderBoard();
+            checkGameOver();
+            if (currentPlayer === 'white') aiMove();
+        }
+
+        // 有効な手かどうかをチェック
+        function isValidMove(x, y, player) {
+            if (board[x][y]) return false;
+
+            for (let [dx, dy] of directions) {
+                let i = x + dx, j = y + dy;
+                let foundOpponent = false;
+
+                while (i >= 0 && i < boardSize && j >= 0 && j < boardSize) {
+                    if (board[i][j] === null) break;
+                    if (board[i][j] !== player) {
+                        foundOpponent = true;
+                    } else if (foundOpponent) {
+                        return true;
+                    } else {
+                        break;
+                    }
+
+                    i += dx;
+                    j += dy;
+                }
+            }
+            return false;
+        }
+
+        // ディスクをひっくり返す
+        function flipDiscs(x, y, player) {
+            for (let [dx, dy] of directions) {
+                let i = x + dx, j = y + dy;
+                let flipList = [];
+
+                while (i >= 0 && i < boardSize && j >= 0 && j < boardSize) {
+                    if (board[i][j] === null) break;
+                    if (board[i][j] === player) {
+                        for (let [fx, fy] of flipList) {
+                            board[fx][fy] = player;
+                        }
+                        break;
+                    } else {
+                        flipList.push([i, j]);
+                    }
+
+                    i += dx;
+                    j += dy;
+                }
+            }
+        }
+
+        // ゲーム終了チェック
+        function checkGameOver() {
+            const blackCount = board.flat().filter(cell => cell === 'black').length;
+            const whiteCount = board.flat().filter(cell => cell === 'white').length;
+
+            if (blackCount + whiteCount === boardSize * boardSize) {
+                messageElement.textContent = `ゲーム終了！ 黒: ${blackCount} - 白: ${whiteCount}`;
+                return;
+            }
+
+            messageElement.textContent = `現在のターン: ${currentPlayer === 'black' ? '黒' : '白'}`;
+        }
+
+        // AIの手を打つ
+        function aiMove() {
+            let bestMove = null;
+            let bestScore = -Infinity;
+
+            // 全ての手を評価
+            for (let i = 0; i < boardSize; i++) {
+                for (let j = 0; j < boardSize; j++) {
+                    if (isValidMove(i, j, 'white')) {
+                        let boardCopy = JSON.parse(JSON.stringify(board));
+                        boardCopy[i][j] = 'white';
+                        flipDiscs(i, j, 'white');
+                        const score = evaluateBoard(boardCopy);
+                        if (score > bestScore) {
+                            bestScore = score;
+                            bestMove = [i, j];
+                        }
+                    }
+                }
+            }
+
+            if (bestMove) {
+                makeMove(bestMove[0], bestMove[1]);
+            }
+        }
+
+        // ボード評価（単純なスコアリング）
+        function evaluateBoard(board) {
+            return board.flat().filter(cell => cell === 'white').length;
+        }
+
+        // 初期設定
+        function initGame() {
+            board[3][3] = 'white';
+            board[3][4] = 'black';
+            board[4][3] = 'black';
+            board[4][4] = 'white';
+            renderBoard();
+            checkGameOver();
+        }
+
+        initGame();
+    </script>
+</body>
+</html>
