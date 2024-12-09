@@ -65,7 +65,21 @@
     }
     main {
       margin-top: 70px;
+      display: flex;
+      height: calc(100vh - 70px); /* ヘッダーを除いた高さ */
+    }
+    .sidebar {
+      flex: 1; /* 左側を1とする */
+      border-right: 1px solid #ddd; /* 境界線 */
+      background-color: #f5f5f5;
       padding: 20px;
+      box-sizing: border-box;
+    }
+    .content {
+      flex: 6; /* 右側を6とする */
+      padding: 20px;
+      box-sizing: border-box;
+      background-color: #ffffff;
     }
   </style>
 </head>
@@ -80,8 +94,12 @@
     </div>
   </header>
   <main>
-    <h1>ようこそ、共通サーバーへ</h1>
-    <p>ここにメインコンテンツを追加してください。</p>
+    <div class="sidebar">
+      <!-- 左側のコンテンツをここに追加 -->
+    </div>
+    <div class="content">
+      <!-- 右側のコンテンツをここに追加 -->
+    </div>
   </main>
 </body>
 </html>
