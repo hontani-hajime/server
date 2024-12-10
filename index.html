@@ -104,10 +104,13 @@
   </header>
   <main>
     <div class="sidebar">
-      <img src="https://hontani-hajime.github.io/server/header/%E3%83%88%E3%83%83%E3%83%95%E3%82%9A.JPG" alt="トップ" class="clickable">
+      <img src="https://hontani-hajime.github.io/server/header/%E3%83%88%E3%83%83%E3%83%97.JPG" alt="トップ" class="clickable">
       <img src="https://hontani-hajime.github.io/server/header/ファイル.JPG" alt="ファイル" class="clickable">
       <img src="https://hontani-hajime.github.io/server/header/日記.JPG" alt="日記" class="clickable">
-      <img src="https://hontani-hajime.github.io/server/header/%E3%82%AB%E3%83%AC%E3%83%B3%E3%82%BF%E3%82%99%E3%83%BC.JPG" alt="カレンダー" class="clickable">
+      <img id="calendar-img" 
+           src="https://hontani-hajime.github.io/server/header/%E3%82%AB%E3%83%AC%E3%83%B3%E3%82%BF%E3%82%99%E3%83%BC.JPG" 
+           alt="カレンダー" 
+           class="clickable">
       <img src="https://hontani-hajime.github.io/server/header/%E3%83%86%E3%82%99%E3%83%BC%E3%82%BF%E3%83%98%E3%82%99%E3%83%BC%E3%82%B9.JPG" alt="データベース" class="clickable">
       <img src="https://hontani-hajime.github.io/server/header/自分追跡.JPG" alt="自分追跡" class="clickable">
       <img src="https://hontani-hajime.github.io/server/header/学習記録表.JPG" alt="学習記録表" class="clickable">
@@ -123,8 +126,17 @@
   </main>
   <audio id="click-sound" src="https://hontani-hajime.github.io/server/mouse.mp3"></audio>
   <script>
+    const calendarImg = document.getElementById("calendar-img");
+    const originalSrc = calendarImg.src;
+    const newSrc = "https://hontani-hajime.github.io/server/header/%E3%82%AB%E3%83%AC%E3%83%B3%E3%82%BF%E3%82%99%E3%83%BC2.JPG";
+
     document.querySelectorAll('.sidebar img').forEach(img => {
       img.addEventListener('click', () => {
+        if (img === calendarImg) {
+          calendarImg.src = newSrc;
+        } else {
+          calendarImg.src = originalSrc;
+        }
         const audio = document.getElementById('click-sound');
         audio.currentTime = 0; // 再生位置をリセット
         audio.play();
