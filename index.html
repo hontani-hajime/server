@@ -104,21 +104,21 @@
   </header>
   <main>
     <div class="sidebar">
-      <img src="https://hontani-hajime.github.io/server/header/%E3%83%88%E3%83%83%E3%83%95%E3%82%9A.JPG" alt="トップ" class="clickable">
+      <img src="https://hontani-hajime.github.io/server/header/%E3%83%88%E3%83%83%E3%83%97.JPG" alt="トップ" class="clickable">
       <img src="https://hontani-hajime.github.io/server/header/ファイル.JPG" alt="ファイル" class="clickable">
       <img src="https://hontani-hajime.github.io/server/header/日記.JPG" alt="日記" class="clickable">
       <img id="calendar-img" 
            src="https://hontani-hajime.github.io/server/header/%E3%82%AB%E3%83%AC%E3%83%B3%E3%82%BF%E3%82%99%E3%83%BC.JPG" 
            alt="カレンダー" 
            class="clickable">
-      <img src="https://hontani-hajime.github.io/server/header/%E3%83%86%E3%82%99%E3%83%BC%E3%82%BF%E3%83%98%E3%82%99%E3%83%BC%E3%82%B9.JPG" alt="データベース" class="clickable">
-      <img src="https://hontani-hajime.github.io/server/header/自分追跡.JPG" alt="自分追跡" class="clickable">
-      <img src="https://hontani-hajime.github.io/server/header/学習記録表.JPG" alt="学習記録表" class="clickable">
-      <img src="https://hontani-hajime.github.io/server/header/音楽.JPG" alt="音楽" class="clickable">
-      <img src="https://hontani-hajime.github.io/server/header/%E3%83%8F%E3%82%9A%E3%82%B9%E3%83%AF%E3%83%BC%E3%83%88%E3%82%99.JPG" alt="パスワード" class="clickable">
-      <img src="https://hontani-hajime.github.io/server/header/読書通帳.JPG" alt="読書通帳" class="clickable">
-      <img src="https://hontani-hajime.github.io/server/header/予算管理.JPG" alt="予算管理" class="clickable">
-      <img src="https://hontani-hajime.github.io/server/header/%E3%83%AA%E3%83%8F%E3%82%99%E3%83%BC%E3%82%B9%E3%83%95%E3%82%9A%E3%83%A9%E3%83%B3.JPG" alt="リバースプラン" class="clickable">
+      <img id="database-img" 
+           src="https://hontani-hajime.github.io/server/header/%E3%83%86%E3%82%99%E3%83%BC%E3%82%BF%E3%83%98%E3%82%99%E3%83%BC%E3%82%B9.JPG" 
+           alt="データベース" 
+           class="clickable">
+      <img id="password-img" 
+           src="https://hontani-hajime.github.io/server/header/%E3%83%8F%E3%82%9A%E3%82%B9%E3%83%AF%E3%83%BC%E3%83%88%E3%82%99.JPG" 
+           alt="パスワード" 
+           class="clickable">
     </div>
     <div class="content">
       <!-- 右側のコンテンツをここに追加 -->
@@ -127,16 +127,37 @@
   <audio id="click-sound" src="https://hontani-hajime.github.io/server/mouse.mp3"></audio>
   <script>
     const calendarImg = document.getElementById("calendar-img");
-    const originalSrc = calendarImg.src;
-    const newSrc = "https://hontani-hajime.github.io/server/header/%E3%82%AB%E3%83%AC%E3%83%B3%E3%82%BF%E3%82%99%E3%83%BC2.JPG";
+    const databaseImg = document.getElementById("database-img");
+    const passwordImg = document.getElementById("password-img");
+
+    const originalImages = {
+      "calendar": calendarImg.src,
+      "database": databaseImg.src,
+      "password": passwordImg.src,
+    };
+
+    const newImages = {
+      "calendar": "https://hontani-hajime.github.io/server/header/%E3%82%AB%E3%83%AC%E3%83%B3%E3%82%BF%E3%82%99%E3%83%BC2.JPG",
+      "database": "https://hontani-hajime.github.io/server/header/%E3%83%86%E3%82%99%E3%83%BC%E3%82%BF%E3%83%98%E3%82%99%E3%83%BC%E3%82%B92.JPG",
+      "password": "https://hontani-hajime.github.io/server/header/%E3%83%8F%E3%82%9A%E3%82%B9%E3%83%AF%E3%83%BC%E3%83%88%E3%82%992.JPG",
+    };
 
     document.querySelectorAll('.sidebar img').forEach(img => {
       img.addEventListener('click', () => {
+        // 全ての画像を元に戻す
+        calendarImg.src = originalImages["calendar"];
+        databaseImg.src = originalImages["database"];
+        passwordImg.src = originalImages["password"];
+        
+        // クリックされた画像だけ変更
         if (img === calendarImg) {
-          calendarImg.src = newSrc;
-        } else {
-          calendarImg.src = originalSrc;
+          calendarImg.src = newImages["calendar"];
+        } else if (img === databaseImg) {
+          databaseImg.src = newImages["database"];
+        } else if (img === passwordImg) {
+          passwordImg.src = newImages["password"];
         }
+
         const audio = document.getElementById('click-sound');
         audio.currentTime = 0; // 再生位置をリセット
         audio.play();
