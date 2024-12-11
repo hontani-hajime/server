@@ -92,7 +92,16 @@
     }
   </style>
   <script>
+    // 効果音を再生する関数
+    function playClickSound() {
+      const clickSound = document.getElementById('click-sound');
+      clickSound.currentTime = 0; // 再生位置をリセット
+      clickSound.play(); // 効果音を再生
+    }
+
+    // 画像を一時的に変更する関数
     function toggleImage(imageElement, newSrc, delay = 200) {
+      playClickSound(); // クリック音を再生
       const originalSrc = imageElement.src; // 現在の画像URLを保存
       imageElement.src = newSrc; // 一瞬別の画像に変更
       setTimeout(() => {
@@ -102,6 +111,9 @@
   </script>
 </head>
 <body>
+  <!-- 効果音のaudio要素 -->
+  <audio id="click-sound" src="https://hontani-hajime.github.io/server/click.m4a"></audio>
+
   <header>
     <div class="logo">
       <img src="https://hontani-hajime.github.io/server/icon.JPG" alt="新しいロゴ">
