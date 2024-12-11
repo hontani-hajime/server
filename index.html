@@ -89,11 +89,10 @@
       padding: 20px;
       box-sizing: border-box;
       background-color: #ffffff;
+      overflow-y: auto;
     }
-    iframe {
-      width: 100%;
-      height: 100%;
-      border: none;
+    .hidden {
+      display: none;
     }
   </style>
   <script>
@@ -105,13 +104,11 @@
       }, delay);
     }
 
-    function showContent(url, elementId) {
-      const contentElement = document.getElementById('content');
-      if (elementId === 'calendar') {
-        contentElement.innerHTML = `<iframe src="${url}" frameborder="0"></iframe>`;
-      } else {
-        contentElement.innerHTML = '';
-      }
+    function loadContent(contentUrl) {
+      // すべての既存コンテンツを非表示にする
+      const contentFrame = document.getElementById('contentFrame');
+      contentFrame.src = contentUrl;
+      contentFrame.classList.remove('hidden');
     }
   </script>
 </head>
@@ -127,19 +124,45 @@
   </header>
   <main>
     <div class="sidebar">
-      <img src="https://hontani-hajime.github.io/server/header/%E3%82%AB%E3%83%AC%E3%83%B3%E3%82%BF%E3%82%99%E3%83%BC.JPG" 
-           alt="カレンダー" 
-           onclick="toggleImage(this, 'https://hontani-hajime.github.io/server/header/%E3%82%AB%E3%83%AC%E3%83%B3%E3%82%BF%E3%82%99%E3%83%BC2.JPG'); showContent('https://hontani-hajime.github.io/server/calendar', 'calendar')">
       <img src="https://hontani-hajime.github.io/server/header/%E3%83%88%E3%83%83%E3%83%95%E3%82%9A.JPG" 
            alt="トップ" 
-           onclick="toggleImage(this, 'https://hontani-hajime.github.io/server/header/%E3%83%88%E3%83%83%E3%83%95%E3%82%9A2.JPG'); showContent('', 'top')">
+           onclick="loadContent('https://hontani-hajime.github.io/server/top')">
       <img src="https://hontani-hajime.github.io/server/header/%E3%83%95%E3%82%A1%E3%82%A4%E3%83%AB.JPG" 
            alt="ファイル" 
-           onclick="toggleImage(this, 'https://hontani-hajime.github.io/server/header/%E3%83%95%E3%82%A1%E3%82%A4%E3%83%AB2.JPG'); showContent('', 'file')">
-      <!-- 他の画像も同様に設定 -->
+           onclick="loadContent('https://hontani-hajime.github.io/server/file')">
+      <img src="https://hontani-hajime.github.io/server/header/%E6%97%A5%E8%A8%98.JPG" 
+           alt="日記" 
+           onclick="loadContent('https://hontani-hajime.github.io/server/diary')">
+      <img src="https://hontani-hajime.github.io/server/header/%E3%82%AB%E3%83%AC%E3%83%B3%E3%82%BF%E3%82%99%E3%83%BC.JPG" 
+           alt="カレンダー" 
+           onclick="loadContent('https://hontani-hajime.github.io/server/calendar')">
+      <img src="https://hontani-hajime.github.io/server/header/%E3%83%86%E3%82%99%E3%83%BC%E3%82%BF%E3%83%98%E3%82%99%E3%83%BC%E3%82%B9.JPG" 
+           alt="データベース" 
+           onclick="loadContent('https://hontani-hajime.github.io/server/database')">
+      <img src="https://hontani-hajime.github.io/server/header/%E8%87%AA%E5%88%86%E8%BF%BD%E8%B7%A1.JPG" 
+           alt="自分追跡" 
+           onclick="loadContent('https://hontani-hajime.github.io/server/self-tracking')">
+      <img src="https://hontani-hajime.github.io/server/header/%E5%AD%A6%E7%BF%92%E8%A8%98%E9%8C%B2%E8%A1%A8.JPG" 
+           alt="学習記録表" 
+           onclick="loadContent('https://hontani-hajime.github.io/server/learning-log')">
+      <img src="https://hontani-hajime.github.io/server/header/%E9%9F%B3%E6%A5%BD.JPG" 
+           alt="音楽" 
+           onclick="loadContent('https://hontani-hajime.github.io/server/music')">
+      <img src="https://hontani-hajime.github.io/server/header/%E3%83%8F%E3%82%9A%E3%82%B9%E3%83%AF%E3%83%BC%E3%83%88%E3%82%99.JPG" 
+           alt="パスワード" 
+           onclick="loadContent('https://hontani-hajime.github.io/server/password')">
+      <img src="https://hontani-hajime.github.io/server/header/%E8%AA%AD%E6%9B%B8%E9%80%9A%E5%B8%B3.JPG" 
+           alt="読書通帳" 
+           onclick="loadContent('https://hontani-hajime.github.io/server/book-log')">
+      <img src="https://hontani-hajime.github.io/server/header/%E4%BA%88%E7%AE%97%E7%AE%A1%E7%90%86.JPG" 
+           alt="予算管理" 
+           onclick="loadContent('https://hontani-hajime.github.io/server/budget-management')">
+      <img src="https://hontani-hajime.github.io/server/header/%E3%83%AA%E3%83%8F%E3%82%99%E3%83%BC%E3%82%B9%E3%83%95%E3%82%9A%E3%83%A9%E3%83%B3.JPG" 
+           alt="リバースプラン" 
+           onclick="loadContent('https://hontani-hajime.github.io/server/reverse-plan')">
     </div>
-    <div class="content" id="content">
-      <!-- コンテンツエリア -->
+    <div class="content">
+      <iframe id="contentFrame" class="hidden" width="100%" height="100%" frameborder="0"></iframe>
     </div>
   </main>
 </body>
